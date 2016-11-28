@@ -25,10 +25,7 @@ cat /proc/cmdline | grep intel_iommu=on
 
 ```bash
 sudo apt-get install openvswitch-switch-dpdk
-sudo ovs-vsctl show
 dpdk-devbind --status
-cat /usr/share/doc/openvswitch-switch-dpdk/README.Debian
-cat /usr/share/doc/dpdk/changelog.Debian.gz
 sudo cp scripts/remap-dpdk-interfaces /usr/local/bin/remap-dpdk-interfaces
 sudo cp configs/etc/systemd/system/dpdk.service /etc/systemd/system/dpdk.service
 sudo cp -r configs/etc/systemd/system/openvswitch-nonetwork.service.d/ /etc/systemd/system/
@@ -38,7 +35,6 @@ sudo systemctl start dpdk.service
 sudo systemctl status dpdk.service
 dpdk-devbind --status
 sudo /etc/init.d/openvswitch-switch stop
-cat /usr/share/doc/openvswitch-switch-dpdk/README.Debian
 sudo update-alternatives --set ovs-vswitchd /usr/lib/openvswitch-switch-dpdk/ovs-vswitchd-dpdk
 sudo /etc/init.d/openvswitch-switch start
 ```
@@ -46,7 +42,7 @@ sudo /etc/init.d/openvswitch-switch start
 ### Openvswitch configuration
 
 ```bash
-sudo /usr/bin/chmod a+x /dev/vfio
+sudo chmod a+x /dev/vfio
 sudo ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-init=true
 sudo ovs-vsctl add-br br-nznog -- set bridge br-nznog datapath_type=netdev
 sudo ovs-vsctl set-fail-mode br-nznog secure
@@ -54,6 +50,7 @@ sudo ovs-vsctl set bridge br-nznog other-config:disable-in-band=true
 sudo ovs-vsctl set Open_vSwitch . "other_config:dpdk-extra=--vhost-owner libvirt-qemu:kvm --vhost-perm 0666"
 sudo less /var/log/syslog
 for i in `seq 0 15`; do sudo ovs-vsctl add-port br-nznog dpdk$i -- set Interface dpdk$i type=dpdk; done
+sudo /etc/init.d/openvswitch-switch restart
 sudo ovs-vsctl show
 ```
 
