@@ -64,7 +64,7 @@ sudo docker pull faucet/faucet:v1_2_1
 sudo docker pull faucet/gauge:v1_2_1
 sudo mkdir -p /etc/ryu/faucet
 sudo mkdir -p /var/log/ryu/faucet
-sudo vi /usr/local/bin/boot-faucet
+sudo cp scripts/boot-faucet /usr/local/bin/boot-faucet
 sudo chmod +x /usr/local/bin/boot-faucet
 sudo /usr/local/bin/boot-faucet
 sudo docker ps
