@@ -1,0 +1,17 @@
+faucet_configs:
+    - '/etc/ryu/faucet/faucet.yaml'
+watchers:
+    port_stats_poller:
+        type: 'port_stats'
+        dps: ['at-x930', 'ovs']
+        interval: 10
+        db: 'influx'
+dbs:
+    influx:
+        type: 'influx'
+        influx_db: 'faucet'
+        influx_host: 'gauge.spring.mgmt.wand.net.nz'
+        influx_port: 8086
+        influx_user: 'faucet'
+        influx_pwd: 'faucet'
+influx_timeout: 10

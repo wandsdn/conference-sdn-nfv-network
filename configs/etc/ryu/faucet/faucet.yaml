@@ -1,0 +1,74 @@
+---
+version: 2
+dps:
+    at-x930:
+        dp_id: 0xECCD6DF7D4AA
+        hardware: 'Allied-Telesis'
+        interfaces:
+            port1:
+                number: 1
+                native_vlan: 824
+            port2:
+                number: 2
+                native_vlan: 824
+            port5:
+                number: 5
+                native_vlan: 824
+            port6:
+                number: 6
+                native_vlan: 824
+    ovs:
+        dp_id: 0x0000a0369f5c3fb8
+        hardware: 'Open vSwitch'
+        interfaces:
+            port1:
+                number: 1
+                native_vlan: 824
+            port2:
+                number: 2
+                native_vlan: 824
+            port3:
+                number: 3
+                native_vlan: 824
+            port4:
+                number: 4
+                native_vlan: 824
+            port5:
+                number: 5
+                native_vlan: 824
+            port6:
+                number: 6
+                native_vlan: 824
+            port7:
+                number: 7
+                native_vlan: 824
+            port8:
+                number: 8
+                native_vlan: 824
+            port9:
+                number: 9
+                native_vlan: 824
+            port10:
+                number: 10
+                native_vlan: 824
+            port11:
+                number: 11
+                native_vlan: 824
+            port12:
+                number: 12
+                native_vlan: 824
+            port13:
+                number: 13
+                native_vlan: 824
+            port14:
+                number: 14
+                native_vlan: 824
+            port15:
+                number: 15
+                native_vlan: 824
+            port16:
+                number: 16
+                native_vlan: 824
+vlans:
+    824:
+        name: 'brad-test'
