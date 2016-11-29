@@ -49,7 +49,7 @@ sudo ovs-vsctl set-fail-mode br-nznog secure
 sudo ovs-vsctl set bridge br-nznog other-config:disable-in-band=true
 sudo ovs-vsctl set Open_vSwitch . "other_config:dpdk-extra=--vhost-owner libvirt-qemu:kvm --vhost-perm 0666"
 sudo less /var/log/syslog
-for i in `seq 0 15`; do sudo ovs-vsctl add-port br-nznog dpdk$i -- set Interface dpdk$i type=dpdk -- set Interface dpdk$i ofport=$i; done
+for i in `seq 0 15`; do sudo ovs-vsctl add-port br-nznog dpdk$i -- set Interface dpdk$i type=dpdk -- set Interface dpdk$i ofport_request=$i; done
 sudo /etc/init.d/openvswitch-switch restart
 sudo ovs-vsctl show
 ```
