@@ -62,8 +62,14 @@ sudo docker pull faucet/gauge:v1_2_1
 sudo mkdir -p /etc/ryu/faucet
 sudo mkdir -p /var/log/ryu/faucet
 sudo cp scripts/boot-dockers /usr/local/bin/
+sudo cp scripts/docker-custom-networking /usr/local/bin/
+sudo cp configs/etc/systemd/system/docker-custom-networking.service /etc/systemd/system/
 sudo chmod +x /usr/local/bin/boot-dockers
+sudo chmod +x /usr/local/bin/docker-custom-networking
 sudo /usr/local/bin/boot-dockers
+sudo systemctl daemon-reload
+sudo systemctl enable docker-custom-networking.service
+sudo systemctl start docker-custom-networking.service
 sudo docker ps
 sudo vi /etc/ryu/faucet/faucet.yaml
 sudo vi /etc/ryu/faucet/gauge.yaml
@@ -82,4 +88,5 @@ sudo ovs-ofctl -OOpenFlow13 dump-ports-desc br-nznog
 sudo ovs-ofctl -OOpenFlow13 dump-flows br-nznog
 sudo ovs-ofctl -OOpenFlow13 show br-nznog
 sudo ovs-appctl dpif-netdev/pmd-stats-show
+sudo docker exec -it control-host /bin/bash
 ```

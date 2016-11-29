@@ -1,0 +1,47 @@
+#!/bin/bash
+# Copyright (C) 2014 Nicira, Inc.
+# Copyright (C) 2016 Brad Cowie, University of Waikato
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at:
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Function is from the ovs-docker tool distributed with OpenvSwitch
+get_port_for_container_interface () {
+    CONTAINER="$1"
+    INTERFACE="$2"
+
+    PORT=`ovs-vsctl --timeout=60 --data=bare --no-heading --columns=name \
+             find interface \
+             external_ids:container_id="$CONTAINER"  \
+             external_ids:container_iface="$INTERFACE"`
+    echo "$PORT"
+}
+
+INTERFACE="eth1"
+SUBNET="172.30.99"
+IP=1
+
+for HOST in faucet gauge control-host; do
+    echo $host
+
+    PORT=`get_port_for_container_interface "$HOST" "$INTERFACE" \
+        2>/dev/null`
+    if [ -n "$PORT" ]; then
+        ovs-vsctl del-port "$PORT"
+    fi
+
+    IPADDR="${SUBNET}.${IP}"
+
+    ovs-docker add-port br-control "$INTERFACE" "$HOST" --ipaddress="$IPADDR/24"
+
+    IP=$((IP + 1))
+done
