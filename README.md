@@ -26,8 +26,8 @@ cat /proc/cmdline | grep intel_iommu=on
 ```bash
 sudo apt-get install openvswitch-switch-dpdk
 dpdk-devbind --status
-sudo cp scripts/remap-dpdk-interfaces /usr/local/bin/remap-dpdk-interfaces
-sudo cp configs/etc/systemd/system/dpdk.service /etc/systemd/system/dpdk.service
+sudo cp scripts/remap-dpdk-interfaces /usr/local/bin/
+sudo cp configs/etc/systemd/system/dpdk.service /etc/systemd/system/
 sudo cp -r configs/etc/systemd/system/openvswitch-nonetwork.service.d/ /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable dpdk.service
@@ -61,12 +61,13 @@ sudo docker pull faucet/faucet:v1_2_1
 sudo docker pull faucet/gauge:v1_2_1
 sudo mkdir -p /etc/ryu/faucet
 sudo mkdir -p /var/log/ryu/faucet
-sudo cp scripts/boot-faucet /usr/local/bin/boot-faucet
-sudo chmod +x /usr/local/bin/boot-faucet
-sudo /usr/local/bin/boot-faucet
+sudo cp scripts/boot-dockers /usr/local/bin/
+sudo chmod +x /usr/local/bin/boot-dockers
+sudo /usr/local/bin/boot-dockers
 sudo docker ps
 sudo vi /etc/ryu/faucet/faucet.yaml
 sudo vi /etc/ryu/faucet/gauge.yaml
+sudo pkill -SIGHUP ryu-manager
 sudo docker logs faucet
 sudo ovs-vsctl set-controller br-nznog tcp:127.0.0.1:6653 tcp:127.0.0.1:6654
 sudo ovs-vsctl show
