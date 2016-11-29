@@ -1,13 +1,15 @@
 docker run -d \
-    --name faucet \
+    --name=faucet \
     -v /etc/ryu/faucet/:/etc/ryu/faucet/ \
     -v /var/log/ryu/faucet/:/var/log/ryu/faucet/ \
     -p 127.0.0.1:6653:6633 \
+    --restart=unless-stopped \
     faucet/faucet:v1_2_1
 
 docker run -d \
-    --name gauge \
+    --name=gauge \
     -v /etc/ryu/faucet/:/etc/ryu/faucet/ \
     -v /var/log/ryu/faucet/:/var/log/ryu/faucet/ \
     -p 127.0.0.1:6654:6633 \
+    --restart=unless-stopped \
     faucet/gauge:v1_2_1
