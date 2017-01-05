@@ -40,6 +40,10 @@ for our two networks that are controlled by faucet via OpenFlow.
    networks. The br-nznog6 network is exposed as VLAN 10 on a tagged port on a
    physical DPDK interface to our OpenFlow switches.
 
+For clues on how everything is plugged in check out the
+[OpenvSwitch config](configs/allbirds/openvswitch.config) and
+[faucet config](configs/vms/faucet/etc/ryu/faucet/faucet.yaml).
+
 ### Machine setup
 
 1. Setup the host machine from [supplied configs and setup.sh](configs/allbirds/)
