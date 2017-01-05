@@ -1,0 +1,112 @@
+version: 2
+vlans:
+    nznog-v6-l2:
+        name: "nznog ipv6-only vlan"
+        vid: 10
+    nznog-v4v6-l2:
+        name: "nznog ipv4/ipv6 vlan"
+        vid: 20
+    nznog-v4v6-l3:
+        name: "nznog ipv4/ipv6 routed vlan"
+        vid: 20
+        controller_ips: ['202.74.195.254/22', '172.16.0.3/24', '2401:7000:69:4000::ffff/64', '2401:7000:69:43e8::f/124', 'fe80::20d:88ff:fe00:aa/64']
+        bgp_port: 9179
+        bgp_as: 9727
+        bgp_routerid: '127.0.0.2'
+        bgp_neighbor_addresses: ['127.0.0.1', '::1']
+        bgp_neighbor_as: 9727
+        routes:
+            - route:
+                ip_dst: '2401:7000:69:4000::fffe/128'
+                ip_gw: '2401:7000:69:4000::fffe'
+            - route:
+                ip_dst: '2401:7000:69::/64'
+                ip_gw: '2401:7000:69:43e8::3'
+    control:
+        name: "openflow control vlan"
+        vid: 99
+dps:
+    ovs-nznog:
+        dp_id: 0xa0369f5d0a20
+        hardware: "Open vSwitch"
+        ignore_learn_ins: 50
+        interfaces:
+            1:
+                native_vlan: nznog-v4v6-l3
+                name: "nat64"
+            2:
+                native_vlan: nznog-v4v6-l3
+                name: "router"
+            3:
+                native_vlan: nznog-v4v6-l3
+                name: "vibe peering"
+            4:
+                tagged_vlans: [nznog-v4v6-l3]
+                name: "at-x930-1"
+            5:
+                tagged_vlans: [nznog-v4v6-l3]
+                name: "at-x930-2"
+            6:
+                native_vlan: nznog-v4v6-l3
+                name: "nznog-host"
+            7:
+                native_vlan: nznog-v4v6-l3
+                name: "fake vibe router"
+            8:
+                native_vlan: nznog-v4v6-l3
+                name: "speedtest"
+    ovs-nznog6:
+        dp_id: 0xa0369f5d0a22
+        hardware: "Open vSwitch"
+        ignore_learn_ins: 50
+        interfaces:
+            1:
+                native_vlan: nznog-v6-l2
+                name: "nat64"
+            2:
+                native_vlan: nznog-v6-l2
+                name: "nznog6-host"
+            6:
+                tagged_vlans: [nznog-v6-l2]
+                name: "at-x930-1"
+            7:
+                tagged_vlans: [nznog-v6-l2]
+                name: "at-x930-2"
+    ovs-control:
+        dp_id: 0xa0369f5d0a2c
+        hardware: "Open vSwitch"
+        interfaces:
+            1:
+                native_vlan: control
+            2:
+                native_vlan: control
+            3:
+                native_vlan: control
+    at-x930-1:
+        dp_id: 0xeccd6df7d4aa
+        description: "at-x930-1"
+        hardware: "Allied-Telesis"
+        interfaces:
+            1:
+                native_vlan: nznog-v4v6-l2
+                name: "port1.0.1"
+            23:
+                tagged_vlans: [nznog-v6-l2]
+                name: "port1.0.23"
+            24:
+                tagged_vlans: [nznog-v4v6-l2]
+                name: "port1.0.24"
+    at-x930-2:
+        dp_id: 0xeccd6def54ff
+        description: "at-x930-2"
+        hardware: "Allied-Telesis"
+        interfaces:
+            1:
+                native_vlan: nznog-v4v6-l2
+                name: "port1.0.1"
+            23:
+                tagged_vlans: [nznog-v6-l2]
+                name: "port1.0.23"
+            24:
+                tagged_vlans: [nznog-v4v6-l2]
+                name: "port1.0.24"

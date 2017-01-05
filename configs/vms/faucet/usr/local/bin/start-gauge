@@ -1,0 +1,9 @@
+#!/bin/bash
+DEFAULTFILE=/etc/default/gauge
+. $DEFAULTFILE
+
+export GAUGE_CONFIG
+export GAUGE_LOG
+export GAUGE_EXCEPTION_LOG
+
+sudo -E -u $GAUGE_USER $RYU_MANAGER --config-file=$GAUGE_RYU_CONF --ofp-tcp-listen-port=$GAUGE_LISTEN_PORT $GAUGE_APP_DIR/gauge.py

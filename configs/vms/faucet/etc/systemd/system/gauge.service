@@ -1,0 +1,11 @@
+[Unit]
+Description="Gauge OpenFlow statistics controller"
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/usr/local/bin/start-gauge
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

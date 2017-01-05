@@ -1,1 +1,0 @@
-nodev       /dev/hugepages  hugetlbfs pagesize=1GB 0 0

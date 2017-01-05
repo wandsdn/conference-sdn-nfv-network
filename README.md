@@ -1,92 +1,59 @@
+### Architecture
+
+![Network Diagram](diagrams/v5-network-diagram.jpg "Network Diagram")
+
+This git repo contains a network-in-a-box suitable for running tech conferences,
+but would easily extend to running any sort fixed network such as a enterprise LAN.
+
+We use the following software:
+ * Userspace OpenvSwitch virtual switch with DPDK
+ * Faucet SDN controller
+ * Bird BGP routing daemon
+ * Unbound DNS resolver
+ * ISC DHCP server
+ * jool NAT64 kernel module
+ * Libvirt + QEMU/KVM virtualization
+
+Which runs on the following hardware:
+ * Dell PowerEdge R530
+ * Intel 1 gig I350 quad port NICs
+ * Intel 10 gig X520 dual port NICs
+ * Allied Telesis X930 OpenFlow switches
+
+We end up with two VLANs which can be broadcast on different wireless SSIDs or
+physical network ports.
+
+ * VLAN 10 is an IPv6-only network with DNS64/NAT64 for talking to legacy IPv4 networks
+ * VLAN 20 is a mixed IPv4 and IPv6 network
+
+We accomplish this by having two OpenvSwitch bridges (br-nznog and br-nznog6)
+for our two networks that are controlled by faucet via OpenFlow.
+
+ * The br-nznog bridge will contain the FIB for routing to our upstream provider.
+   The FIB is installed by faucet and calculated by bird from any routes it
+   receives via BGP from the upstream network. The br-nznog network is exposed as
+   VLAN 20 on a tagged port on a physical DPDK interface to our OpenFlow switches.
+
+ * The br-nznog6 bridge is a separate layer 2 IPv6-only network and we use a VM
+   connected to both our bridges and linux routing to join the two networks. Jool
+   provides NAT64 translation so that our IPv6-only clients can speak to IPv4
+   networks. The br-nznog6 network is exposed as VLAN 10 on a tagged port on a
+   physical DPDK interface to our OpenFlow switches.
+
 ### Machine setup
 
-```bash
-mkdir .ssh
-vi .ssh/authorized_keys
-sudo vi /etc/network/interfaces
-sudo vi /etc/ssh/sshd_config
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get dist-upgrade
-sudo netstat -lnp
-sudo apt-get install htop tcpdump vim git docker.io aufs-tools
-cat /proc/cmdline | grep iommu=pt
-cat /proc/cmdline | grep intel_iommu=on
-dmesg | grep -e DMAR -e IOMMU
-sudo cp configs/etc/default/grub /etc/default/grub
-sudo update-grub
-sudo cat configs/etc/fstab >> /etc/fstab
-sudo reboot
-cat /proc/cmdline | grep iommu=pt
-cat /proc/cmdline | grep intel_iommu=on
-```
-
-### Userspace openvswitch + DPDK install
-
-```bash
-sudo apt-get install openvswitch-switch-dpdk
-dpdk-devbind --status
-sudo cp scripts/remap-dpdk-interfaces /usr/local/bin/
-sudo cp configs/etc/systemd/system/dpdk.service /etc/systemd/system/
-sudo cp -r configs/etc/systemd/system/openvswitch-nonetwork.service.d/ /etc/systemd/system/
-sudo systemctl daemon-reload
-sudo systemctl enable dpdk.service
-sudo systemctl start dpdk.service
-sudo systemctl status dpdk.service
-dpdk-devbind --status
-sudo /etc/init.d/openvswitch-switch stop
-sudo update-alternatives --set ovs-vswitchd /usr/lib/openvswitch-switch-dpdk/ovs-vswitchd-dpdk
-sudo /etc/init.d/openvswitch-switch start
-```
-
-### Openvswitch configuration
-
-```bash
-sudo chmod a+x /dev/vfio
-sudo ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-init=true
-sudo ovs-vsctl add-br br-nznog -- set bridge br-nznog datapath_type=netdev
-sudo ovs-vsctl set-fail-mode br-nznog secure
-sudo ovs-vsctl set bridge br-nznog other-config:disable-in-band=true
-sudo ovs-vsctl set Open_vSwitch . "other_config:dpdk-extra=--vhost-owner libvirt-qemu:kvm --vhost-perm 0666"
-sudo less /var/log/syslog
-for i in `seq 0 15`; do sudo ovs-vsctl add-port br-nznog dpdk$i -- set Interface dpdk$i type=dpdk -- set Interface dpdk$i ofport_request=$i; done
-sudo /etc/init.d/openvswitch-switch restart
-sudo ovs-vsctl show
-```
-
-### Faucet setup
-
-```bash
-sudo docker pull faucet/faucet:v1_2_1
-sudo docker pull faucet/gauge:v1_2_1
-sudo mkdir -p /etc/ryu/faucet
-sudo mkdir -p /var/log/ryu/faucet
-sudo cp scripts/boot-dockers /usr/local/bin/
-sudo cp scripts/docker-custom-networking /usr/local/bin/
-sudo cp configs/etc/systemd/system/docker-custom-networking.service /etc/systemd/system/
-sudo chmod +x /usr/local/bin/boot-dockers
-sudo chmod +x /usr/local/bin/docker-custom-networking
-sudo /usr/local/bin/boot-dockers
-sudo systemctl daemon-reload
-sudo systemctl enable docker-custom-networking.service
-sudo systemctl start docker-custom-networking.service
-sudo docker ps
-sudo vi /etc/ryu/faucet/faucet.yaml
-sudo vi /etc/ryu/faucet/gauge.yaml
-sudo pkill -SIGHUP ryu-manager
-sudo docker logs faucet
-sudo ovs-vsctl set-controller br-nznog tcp:127.0.0.1:6653 tcp:127.0.0.1:6654
-sudo ovs-vsctl show
-less /var/log/ryu/faucet/faucet.log
-```
+1. Setup the host machine from [supplied configs and setup.sh](configs/allbirds/)
+2. Setup the faucet and services VM from [supplied configs and setup.sh](configs/vms/faucet/)
+3. Setup the NAT64 VM from [supplied configs and setup.sh](configs/vms/nat64/)
 
 ### Debugging
 
+Here are some useful debugging commands:
+
 ```bash
-sudo ovs-ofctl -OOpenFlow13 dump-ports br-nznog
-sudo ovs-ofctl -OOpenFlow13 dump-ports-desc br-nznog
-sudo ovs-ofctl -OOpenFlow13 dump-flows br-nznog
-sudo ovs-ofctl -OOpenFlow13 show br-nznog
+sudo ovs-ofctl -OOpenFlow13 dump-ports [bridge]
+sudo ovs-ofctl -OOpenFlow13 dump-ports-desc [bridge]
+sudo ovs-ofctl -OOpenFlow13 dump-flows [bridge]
+sudo ovs-ofctl -OOpenFlow13 show [bridge]
 sudo ovs-appctl dpif-netdev/pmd-stats-show
-sudo docker exec -it control-host /bin/bash
 ```
