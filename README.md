@@ -44,7 +44,14 @@ For clues on how everything is plugged in check out the
 [OpenvSwitch config](configs/allbirds/openvswitch.config) and
 [faucet config](configs/vms/faucet/etc/ryu/faucet/faucet.yaml).
 
-### Machine setup
+### Network setup
+
+There are two options for deploying this network, the manual way and the ansible
+way.
+
+We recommend deploying the network from our [ansible repo](https://github.com/wandsdn/nznog-ansible).
+
+Or you can manually deploy the network based on our raw configuration files:
 
 1. Setup the host machine from [supplied configs and setup.sh](configs/allbirds/)
 2. Setup the faucet and services VM from [supplied configs and setup.sh](configs/vms/faucet/)
