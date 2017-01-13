@@ -40,22 +40,12 @@ for our two networks that are controlled by faucet via OpenFlow.
    networks. The br-nznog6 network is exposed as VLAN 10 on a tagged port on a
    physical DPDK interface to our OpenFlow switches.
 
-For clues on how everything is plugged in check out the
-[OpenvSwitch config](configs/allbirds/openvswitch.config) and
-[faucet config](configs/vms/faucet/etc/ryu/faucet/faucet.yaml).
-
 ### Network setup
 
-There are two options for deploying this network, the manual way and the ansible
-way.
+The network can be easily deployed with ansible which will automatically install
+and configure all required software.
 
-We recommend deploying the network from our [ansible repo](https://github.com/wandsdn/nznog-ansible).
-
-Or you can manually deploy the network based on our raw configuration files:
-
-1. Setup the host machine from [supplied configs and setup.sh](configs/allbirds/)
-2. Setup the faucet and services VM from [supplied configs and setup.sh](configs/vms/faucet/)
-3. Setup the NAT64 VM from [supplied configs and setup.sh](configs/vms/nat64/)
+You can find instructions on our [ansible repo](https://github.com/wandsdn/nznog-ansible).
 
 ### Debugging
 

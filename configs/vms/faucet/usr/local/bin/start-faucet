@@ -1,9 +1,0 @@
-#!/bin/bash
-DEFAULTFILE=/etc/default/faucet
-. $DEFAULTFILE
-
-export FAUCET_CONFIG
-export FAUCET_LOG
-export FAUCET_EXCEPTION_LOG
-
-sudo -E -u $FAUCET_USER $RYU_MANAGER --config-file=$FAUCET_RYU_CONF --ofp-tcp-listen-port=$FAUCET_LISTEN_PORT $FAUCET_APP_DIR/faucet.py
