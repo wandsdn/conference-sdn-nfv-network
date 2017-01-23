@@ -1,6 +1,7 @@
 ### Architecture
 
-![Network Diagram](diagrams/v5-network-diagram.jpg "Network Diagram")
+![Virtual Network Diagram](diagrams/v5-virtual-network.jpg "Virtual Network Diagram")
+![Physical Network Diagram](diagrams/v5-physical-network.jpg "Physical Network Diagram")
 
 This git repo contains a network-in-a-box suitable for running tech conferences,
 but would easily extend to running any sort fixed network such as a enterprise LAN.
