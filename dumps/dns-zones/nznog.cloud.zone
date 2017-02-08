@@ -1,0 +1,42 @@
+; nznog.cloud Dumped Wed Feb  1 18:46:31 2017
+;
+nznog.cloud.    86400   IN  SOA ns1.he.net. hostmaster.he.net. (
+                    2017012404  ;serial
+                    10800       ;refresh
+                    1800        ;retry
+                    604800      ;expire
+                    86400   )   ;minimum
+nznog.cloud.                86400   IN  NS      ns1.he.net.
+nznog.cloud.                86400   IN  NS      ns2.he.net.
+nznog.cloud.                86400   IN  NS      ns3.he.net.
+nznog.cloud.                86400   IN  NS      ns4.he.net.
+nznog.cloud.                86400   IN  NS      ns5.he.net.
+management.nznog.cloud.     86400   IN  NS      ns1.he.net.
+management.nznog.cloud.     86400   IN  NS      ns2.he.net.
+management.nznog.cloud.     86400   IN  NS      ns3.he.net.
+management.nznog.cloud.     86400   IN  NS      ns4.he.net.
+management.nznog.cloud.     86400   IN  NS      ns5.he.net.
+allbirds.nznog.cloud.       300     IN  A       202.74.195.245
+allbirds.nznog.cloud.       300     IN  AAAA    2401:7000:69:4000:46a8:42ff:fe04:8891
+awdy.nznog.cloud.           300     IN  A       202.74.195.240
+awdy.nznog.cloud.           300     IN  AAAA    2401:7000:69:4000:5054:ff:fe2f:9adc
+faucet-tut.nznog.cloud.     300     IN  A       202.74.192.51
+faucet-tut.nznog.cloud.     300     IN  AAAA    2401:7000:69:4000:46a8:42ff:fe04:8511
+faucet-vip-v4.nznog.cloud.  300     IN  A       202.74.195.254
+faucet-vip-v6.nznog.cloud.  300     IN  AAAA    2401:7000:69:4000::ffff
+faucet.nznog.cloud.         300     IN  A       202.74.195.253
+faucet.nznog.cloud.         300     IN  AAAA    2401:7000:69:4000::fffe
+gauge.nznog.cloud.          300     IN  CNAME   faucet.nznog.cloud.
+grafana.nznog.cloud.        300     IN  CNAME   gauge.nznog.cloud.
+nat64.nznog.cloud.          300     IN  AAAA    2401:7000:69::ffff
+nznog.cloud.                300     IN  A       52.14.6.129
+nznog.cloud.                300     IN  AAAA    2600:1f16:97c:f500::129
+smokeping.nznog.cloud.      300     IN  A       202.74.195.243
+smokeping.nznog.cloud.      300     IN  AAAA    2401:7000:69:4000:5054:ff:fe11:61f0
+speedtest.nznog.cloud.      300     IN  A       202.74.195.241
+speedtest.nznog.cloud.      300     IN  AAAA    2401:7000:69:4000:20d:88ff:fe00:1
+speedtest2.nznog.cloud.     300     IN  A       202.74.195.242
+speedtest2.nznog.cloud.     300     IN  AAAA    2401:7000:69:4000:20d:88ff:fe00:2
+unifi.nznog.cloud.          300     IN  A       202.74.195.244
+unifi.nznog.cloud.          300     IN  AAAA    2401:7000:69:4000:5054:ff:fe24:43fe
+www.nznog.cloud.            300     IN  CNAME   nznog.cloud.

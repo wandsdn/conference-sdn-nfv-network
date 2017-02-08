@@ -1,0 +1,33 @@
+OFPT_FEATURES_REPLY (OF1.3) (xid=0x2): dpid:0000a0369f5d0a22
+n_tables:254, n_buffers:256
+capabilities: FLOW_STATS TABLE_STATS PORT_STATS GROUP_STATS QUEUE_STATS
+OFPST_PORT_DESC reply (OF1.3) (xid=0x3):
+ 1(vhost-nat64-nzn): addr:00:00:00:00:00:00
+     config:     0
+     state:      0
+     speed: 0 Mbps now, 0 Mbps max
+ 2(vhost-host-nzno): addr:00:00:00:00:00:00
+     config:     0
+     state:      LINK_DOWN
+     speed: 0 Mbps now, 0 Mbps max
+ 6(dpdk5): addr:a0:36:9f:5d:0a:22
+     config:     0
+     state:      LINK_DOWN
+     current:    10MB-HD 100MB-HD 1GB-HD 1GB-FD AUTO_NEG
+     advertised: 1GB-HD 1GB-FD 10GB-FD 40GB-FD 1TB-FD OTHER COPPER AUTO_NEG
+     peer:       10GB-FD 40GB-FD 100GB-FD OTHER COPPER FIBER AUTO_NEG
+     speed: 1000 Mbps now, 0 Mbps max
+ 7(dpdk6): addr:a0:36:9f:5d:0a:23
+     config:     0
+     state:      LINK_DOWN
+     current:    AUTO_NEG
+     advertised: 1GB-HD 1TB-FD OTHER AUTO_NEG AUTO_PAUSE AUTO_PAUSE_ASYM
+     supported:  10MB-HD 10MB-FD 100MB-FD 1GB-FD 40GB-FD 100GB-FD OTHER FIBER AUTO_PAUSE
+     peer:       10MB-HD 100MB-HD
+     speed: 0 Mbps now, 100000 Mbps max
+ LOCAL(br-nznog6): addr:a0:36:9f:5d:0a:22
+     config:     PORT_DOWN
+     state:      LINK_DOWN
+     current:    10MB-FD COPPER
+     speed: 10 Mbps now, 0 Mbps max
+OFPT_GET_CONFIG_REPLY (OF1.3) (xid=0x5): frags=normal miss_send_len=0

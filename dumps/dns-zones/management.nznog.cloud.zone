@@ -1,0 +1,25 @@
+; management.nznog.cloud Dumped Wed Feb  1 18:55:19 2017
+;
+management.nznog.cloud. 86400   IN  SOA ns1.he.net. hostmaster.he.net. (
+                    2017020103  ;serial
+                    10800       ;refresh
+                    1800        ;retry
+                    604800      ;expire
+                    86400   )   ;minimum
+management.nznog.cloud.                 86400   IN  NS  ns1.he.net.
+management.nznog.cloud.                 86400   IN  NS  ns2.he.net.
+management.nznog.cloud.                 86400   IN  NS  ns3.he.net.
+management.nznog.cloud.                 86400   IN  NS  ns4.he.net.
+management.nznog.cloud.                 86400   IN  NS  ns5.he.net.
+at-x930-1.management.nznog.cloud.       300     IN  A   172.30.99.100
+at-x930-2.management.nznog.cloud.       300     IN  A   172.30.99.101
+faucet.management.nznog.cloud.          300     IN  A   172.30.99.1
+link022.management.nznog.cloud.         300     IN  A   172.30.99.220
+nznog-ap-1.management.nznog.cloud.      300     IN  A   172.30.99.201
+nznog-ap-2.management.nznog.cloud.      300     IN  A   172.30.99.202
+nznog-ap-3.management.nznog.cloud.      300     IN  A   172.30.99.203
+nznog-lite-1.management.nznog.cloud.    300     IN  A   172.30.99.204
+nznog-lite-2.management.nznog.cloud.    300     IN  A   172.30.99.205
+nznog-lite-3.management.nznog.cloud.    300     IN  A   172.30.99.206
+nznog-lite-4.management.nznog.cloud.    300     IN  A   172.30.99.207
+unifi.management.nznog.cloud.           300     IN  A   172.30.99.2
